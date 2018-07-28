@@ -10,9 +10,38 @@ bot.on('ready', function () {
 
 bot.login(process.env.TOKEN);
 
-var aide = "Je suis en développement, donc inutile d'essayer de m'utiliser :D";
+var aide = "Je suis en développement, donc inutile d'essayer de m'utiliser :smile:";
+
+function clean(text) {
+    if (typeof(text) === "string") {
+        return text.replace(/`/g, "`" + String.fromCharCode(8203)).replace(/@/g, "@" + String.fromCharCode(8203));
+    } else {
+        return text;
+    }
+}
 
 bot.on("message", message => {
+    if (message.content.startsWith(prefix + "eval")) {
+        if (message.author.id !== "417754880950927360") {
+            message.channel.send("NOPE :no_entry:");
+            break;
+        } else if (message.content === prefix + "eval process.env.TOKEN") {
+            message.channel.send("Mais t'es fou toi ! Me demander mon token en public !");
+        } else {
+            try {
+                const code = args.join(" ");
+                let evaled = eval(code);
+
+                if (typeof evaled !== "string")
+                    evaled = require("util").inspect(evaled);
+
+                message.channel.send(clean(evaled), {code:"xl"});
+            } catch (err) {
+                message.channel.send(`\`ERROR\` \`\`\`xl\n${clean(err)}\n\`\`\``);
+            }
+        }
+    }
+    
     switch (message.content) {
     case (prefix + "help"):
         message.channel.send(aide);
@@ -33,6 +62,12 @@ bot.on("message", message => {
         message.channel.send("**PON...** Keske");
         message.channel.send("MAIS T'ES CON OU QUOI ??? LA COMMANDE C'EST `" + prefix + "ping` BORDEL !!");
         message.channel.send("Bon, ca ira pour cette fois... Mon ping est de **" + ping + "ms**. Mais attention la prochaine fois hein :unamused:");
+        break;
+    
+            
+    case (prefix + "aide"):
+        message.channel.send("<@" + message.author.id + ">, un administrateur a été prévenu, il sera à vous d'ici peu ! Rendez-vous dans le chat <#463112133849120771> :smile:");
+        
         break;
     }
 });
