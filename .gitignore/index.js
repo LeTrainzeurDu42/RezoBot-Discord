@@ -21,26 +21,6 @@ function clean(text) {
 }
 
 bot.on("message", message => {
-    if (message.content.startsWith(prefix + "eval")) {
-        if (message.author.id !== "417754880950927360") {
-            message.channel.send("NOPE :no_entry:");
-            break;
-        } else if (message.content === prefix + "eval process.env.TOKEN") {
-            message.channel.send("Mais t'es fou toi ! Me demander mon token en public !");
-        } else {
-            try {
-                const code = args.join(" ");
-                let evaled = eval(code);
-
-                if (typeof evaled !== "string")
-                    evaled = require("util").inspect(evaled);
-
-                message.channel.send(clean(evaled), {code:"xl"});
-            } catch (err) {
-                message.channel.send(`\`ERROR\` \`\`\`xl\n${clean(err)}\n\`\`\``);
-            }
-        }
-    }
     
     switch (message.content) {
     case (prefix + "help"):
