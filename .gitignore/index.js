@@ -17,15 +17,24 @@ bot.on("message", message => {
     case (prefix + "help"):
         message.channel.send(aide);
         break;
+            
     case (prefix + "ping"):
         var ping = new Date().getTime() - message.createdTimestamp;
-        commandes.ping(ping);
+        message.channel.send("**PONG !** :ping_pong:");
+        message.channel.send("Mon ping est de **" + ping + "ms**.");
         break;
+            
     case (prefix + "site"):
         message.channel.send("Voici le site Internet du Rézo Quotidien ! https://rezoquotidien.wordpress.com/");
         break;
+            
     case (prefix + "pong"):
         var ping = new Date().getTime() - message.createdTimestamp;
-        commandes.pong(ping);
+        var reponse = function(ping) {
+            message.channel.send("Bon, bah t'auras les infos cette fois-ci, mais la prochaine fois fais gaffe hein ! mon ping est de **" + ping + "ms**.");
+        }
+        message.channel.send("**PON...** Mais keske ?");
+        setTimeOut(function() {message.channel.send("MAIS T'ES CON TOI ! LA COMMANDE C'EST `r!ping` PUTAIN !"); setTimeout(reponse(ping), 1500)}, 1500)
+        break;
     }
 });
