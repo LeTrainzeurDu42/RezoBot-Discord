@@ -54,7 +54,9 @@ bot.on("message", message => {
 bot.on("guildMemberAdd", member => {
     member.createDM().then(channel => {
         return channel.send("Bienvenue à toi <@" + member.id + "> ! Le staff t'invite à aller consulter le règlement et à le valider afin de recevoir ton grade de membre. Passe un bon moment sur le serveur !")
-    }).catch(const welcomechannel = member.guild.channels.find('id', '444826960120512513') // ID de notre channel
-    var bienvenue = "Bienvenue à toi <@" + member.id + "> ! Le staff t'invite à aller consulter le #règlement et à le valider afin de recevoir ton grade de membre. Passe un bon moment sur le serveur !";
-    return bienvenue;)
+    }).catch(channel => {
+        const welcomechannel = member.guild.channels.find('id', '444826960120512513') // ID de notre channel
+        var bienvenue = "Bienvenue à toi <@" + member.id + "> ! Le staff t'invite à aller consulter le #règlement et à le valider afin de recevoir ton grade de membre. Passe un bon moment sur le serveur !";
+        return channel.send bienvenue;
+    });
 });
