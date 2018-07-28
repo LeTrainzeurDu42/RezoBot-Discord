@@ -12,7 +12,7 @@ bot.login(process.env.TOKEN);
 
 
 bot.on("message", message => {
-    if (message.channel === 472732873179267082) {
+    if (message.channel === "472732873179267082") {
         if (message.author.bot === false) { 
             message.channel.send(message.author);
         } 
