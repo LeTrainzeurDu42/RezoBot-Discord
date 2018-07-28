@@ -4,13 +4,13 @@ const bot = new Discord.Client();
 var prefix = ("r!");
 
 bot.on('ready', function () {
-    bot.user.setActivity("Développement en cours.");
+    bot.user.setActivity("BETA 0.1.41 - EN DEV");
     console.log("Connecté");
 });
 
 bot.login(process.env.TOKEN);
 
-var aide = "BETA 0.1.41 - EN DEV";
+var aide = "Merci de ne pas utiliser le bot pour le moment.";
 
 
 bot.on("message", message => {
