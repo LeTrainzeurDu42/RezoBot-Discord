@@ -57,4 +57,4 @@ bot.on("guildMemberAdd", member => {
     }).catch(const welcomechannel = member.guild.channels.find('id', '444826960120512513') // ID de notre channel
     var bienvenue = "Bienvenue à toi <@" + member.id + "> ! Le staff t'invite à aller consulter le #règlement et à le valider afin de recevoir ton grade de membre. Passe un bon moment sur le serveur !";
     return bienvenue;)
-})
+});
