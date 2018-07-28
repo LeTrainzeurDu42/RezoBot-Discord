@@ -15,6 +15,7 @@ var aide = "Je suis en développement, donc inutile d'essayer de m'utiliser :smi
 
 bot.on("message", message => {
     
+    
     switch (message.content) {
     case (prefix + "help"):
         message.channel.send(aide);
@@ -35,6 +36,11 @@ bot.on("message", message => {
         message.channel.send("**PON...** Keske");
         message.channel.send("MAIS T'ES CON OU QUOI ??? LA COMMANDE C'EST `" + prefix + "ping` BORDEL !!");
         message.channel.send("Bon, ca ira pour cette fois... Mon ping est de **" + ping + "ms**. Mais attention la prochaine fois hein :unamused:");
+        break;
+            
+    case (":middle_finger"):
+        message.channel.send("C'est pas très très gentil <@" + message.author.id + ">... ");
+        message.delete();
         break;
        
     //case (prefix + "aide"):
