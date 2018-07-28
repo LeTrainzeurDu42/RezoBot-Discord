@@ -10,7 +10,7 @@ bot.on('ready', function () {
 
 bot.login(process.env.TOKEN);
 
-var aide = "Je suis en développement, donc inutile d'essayer de m'utiliser :smile:";
+var aide = "BETA 0.1.41 - EN DEV";
 
 
 bot.on("message", message => {
