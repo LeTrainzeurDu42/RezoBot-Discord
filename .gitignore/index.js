@@ -27,6 +27,12 @@ bot.on("message", message => {
     case (prefix + "site"):
         message.channel.send("Voici le site Internet du Rézo Quotidien ! https://rezoquotidien.wordpress.com/");
         break;
-            
+    
+    case (prefix + "pong"):
+        var ping = new Date().getTime() - message.createdTimestamp;
+        message.channel.send("**PON...** Keske");
+        setTimeout(message.channel.send("MAIS T'ES CON OU QUOI ??? LA COMMANDE C'EST `" + prefix + "ping` BORDEL !!"), 1500);
+        setTimeout(message.channel.send("Bon, ca ira pour cette fois... Mon ping est de **" + ping + "ms**. Mais attention la prochaine fois hein :unamused:"), 3000)
+        break;
     }
 });
