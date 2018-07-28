@@ -38,10 +38,6 @@ bot.on("message", message => {
         message.channel.send("Bon, ca ira pour cette fois... Mon ping est de **" + ping + "ms**. Mais attention la prochaine fois hein :unamused:");
         break;
             
-    case (":middle_finger: "):
-        message.channel.send("C'est pas très très gentil <@" + message.author.id + ">... ");
-        message.delete();
-        break;
        
     //case (prefix + "aide"):
         //message.channel.send("<@" + message.author.id + ">, un @Staff a été prévenu, il sera à vous d'ici peu ! Rendez-vous dans le chat <#463112133849120771> :smile:");
@@ -54,3 +50,11 @@ bot.on("message", message => {
        // break;
     }
 });
+
+bot.on("guildMemberAdd", member => {
+    member.createDM().then(channel => {
+        return channel.send("Bienvenue à toi <@" + member.id + "> ! Le staff t'invite à aller consulter le règlement et à le valider afin de recevoir ton grade de membre. Passe un bon moment sur le serveur !")
+    }).catch(const welcomechannel = member.guild.channels.find('id', '444826960120512513') // ID de notre channel
+    var bienvenue = "Bienvenue à toi <@" + member.id + "> ! Le staff t'invite à aller consulter le #règlement et à le valider afin de recevoir ton grade de membre. Passe un bon moment sur le serveur !";
+    return bienvenue;)
+})
