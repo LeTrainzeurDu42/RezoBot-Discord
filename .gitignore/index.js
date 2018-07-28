@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
 const bot = new Discord.Client();
+const commandes = require("commandes");
 
 var prefix = ("r!");
 
@@ -18,11 +19,13 @@ bot.on("message", message => {
         break;
     case (prefix + "ping"):
         var ping = new Date().getTime() - message.createdTimestamp;
-        message.channel.send("Mon ping est de **" + ping + "ms**.");
+        commandes.ping(ping);
         break;
     case (prefix + "site"):
         message.channel.send("Voici le site Internet du Rézo Quotidien ! https://rezoquotidien.wordpress.com/");
         break;
-        
+    case (prefix + "pong"):
+        var ping = new Date().getTime() - message.createdTimestamp;
+        commandes.pong(ping);
     }
 });
