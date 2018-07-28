@@ -43,11 +43,15 @@ bot.on("message", message => {
         message.channel.send("MAIS T'ES CON OU QUOI ??? LA COMMANDE C'EST `" + prefix + "ping` BORDEL !!");
         message.channel.send("Bon, ca ira pour cette fois... Mon ping est de **" + ping + "ms**. Mais attention la prochaine fois hein :unamused:");
         break;
-    
-            
+       
     case (prefix + "aide"):
-        message.channel.send("<@" + message.author.id + ">, un administrateur a été prévenu, il sera à vous d'ici peu ! Rendez-vous dans le chat <#463112133849120771> :smile:");
-        
+        message.channel.send("<@" + message.author.id + ">, un @Staff a été prévenu, il sera à vous d'ici peu ! Rendez-vous dans le chat <#463112133849120771> :smile:");
+        message.author.addRole("472802977661452292")
+        break;
+    
+    case (prefix + "delrole aide"):
+        role.id("472802977661452292").members.removeRole("472802977661452292");
+        message.channel.send("Succès !");
         break;
     }
 });
