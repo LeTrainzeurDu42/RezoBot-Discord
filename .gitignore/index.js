@@ -15,7 +15,10 @@ bot.on("message", message => {
         case (prefix + "help"):
             message.channel.send("Bot en développement, merci de ne pas tenter de l'utiliser (tfaçon ça fera rien mdr)");
             break;
+        case (prefix + "ping"):
+            message.channel.send("Mon ping est de **" + (newDate().getTime() - message.createdTimestamp) + "ms**.");
+            break;
     };
-            
+      
 });
 
