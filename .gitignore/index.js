@@ -19,5 +19,6 @@ bot.on("message", message => {
             const m = await message.channel.send("Pong ! :ping_pong:");
             m.edit(`Le ping est de ** ${m.createdTimestamp - message.createdTimestamp}ms**. Le ping API est de **${Math.round(client.ping)}ms**`);
             break;
+    }
             
 });
