@@ -12,13 +12,6 @@ bot.login(process.env.TOKEN);
 
 var aide = "Je suis en développement, donc inutile d'essayer de m'utiliser :smile:";
 
-function clean(text) {
-    if (typeof(text) === "string") {
-        return text.replace(/`/g, "`" + String.fromCharCode(8203)).replace(/@/g, "@" + String.fromCharCode(8203));
-    } else {
-        return text;
-    }
-}
 
 bot.on("message", message => {
     
