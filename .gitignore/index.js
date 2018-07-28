@@ -38,7 +38,7 @@ bot.on("message", message => {
         message.channel.send("Bon, ca ira pour cette fois... Mon ping est de **" + ping + "ms**. Mais attention la prochaine fois hein :unamused:");
         break;
             
-    case ("/:middle_finger/:"):
+    case (":middle_finger: "):
         message.channel.send("C'est pas très très gentil <@" + message.author.id + ">... ");
         message.delete();
         break;
