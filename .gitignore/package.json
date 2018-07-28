@@ -1,0 +1,14 @@
+{
+  "name": "rezobot",
+  "version": "0.1.0",
+  "description": "Bot officiel du Rézo Quotidien",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Le Trainzeur du 42#2061",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^11.3.2"
+  }
+}
