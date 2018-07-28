@@ -12,21 +12,19 @@ bot.login(process.env.TOKEN);
 
 
 bot.on("message", message => {
-    if (message.channel.id === "472732873179267082") {
-        if (message.author.bot === false) { 
-            message.channel.send(message.author);
-        } 
-    } else {
-        switch (message.content) {
-        case (prefix + "help"):
-            message.channel.send(aide);
-            break;
-        case (prefix + "ping"):
-            var ping = new Date().getTime() - message.createdTimestamp;
-            message.channel.send("Mon ping est de **" + ping + "ms**.");
-            break;
+    switch (message.content) {
+    case (prefix + "help"):
+        message.channel.send(aide);
+        break;
+    case (prefix + "ping"):
+        var ping = new Date().getTime() - message.createdTimestamp;
+        message.channel.send("Mon ping est de **" + ping + "ms**.");
+        break;
+    case (prefix + "site"):
+        message.channel.send("Voici le site Internet du Rézo Quotidien ! https://rezoquotidien.wordpress.com/");
+        break;
         
-        }
+    }
     
     }
       
