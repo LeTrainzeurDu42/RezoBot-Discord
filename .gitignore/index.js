@@ -51,8 +51,8 @@ bot.on("message", message => {
     }
 });
 
-bot.on("guildMemberAdd", member => {
+bot.on('guildMemberAdd', member => {
     member.createDM().then(channel => {
-        return channel.send("Bienvenue à toi <@" + member.id + "> ! Le staff t'invite à aller consulter le règlement et à le valider afin de recevoir ton grade de membre. Passe un bon moment sur le serveur !")
-    }).catch(console.log(error))
-});
+        return channel.send("Bienvenue à toi sur le serveur du Rézo Quotidien ! Le staff t'invite à aller consulter le règlement et à le valider afin de recevoir ton grade de membre. Passe un bon moment sur le serveur !")
+    }).catch(console.error)
+})
