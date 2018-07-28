@@ -10,15 +10,23 @@ bot.on('ready', function () {
 
 bot.login(process.env.TOKEN);
 
+
 bot.on("message", message => {
-    switch (message.content) {
+    if (message.channel === 472732873179267082) {
+        message.channel.send(message.author);
+        return;
+    } else {
+        switch (message.content) {
         case (prefix + "help"):
-            message.channel.send("Bot en développement, merci de ne pas tenter de l'utiliser (tfaçon ça fera rien mdr)");
+            message.channel.send(aide);
             break;
         case (prefix + "ping"):
             var ping = new Date().getTime() - message.createdTimestamp;
             message.channel.send("Mon ping est de **" + ping + "ms**.");
             break;
-    };
+        
+        }
+    
+    }
       
 });
