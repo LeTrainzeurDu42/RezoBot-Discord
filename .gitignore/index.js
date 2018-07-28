@@ -39,7 +39,7 @@ bot.on("message", message => {
        
     case (prefix + "aide"):
         message.channel.send("<@" + message.author.id + ">, un @Staff a été prévenu, il sera à vous d'ici peu ! Rendez-vous dans le chat <#463112133849120771> :smile:");
-        message.author.addRole("472802977661452292")
+        message.author.addRole("472802977661452292");
         break;
     
     case (prefix + "delrole aide"):
