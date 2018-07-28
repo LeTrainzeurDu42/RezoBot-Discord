@@ -13,8 +13,9 @@ bot.login(process.env.TOKEN);
 
 bot.on("message", message => {
     if (message.channel === 472732873179267082) {
-        message.channel.send(message.author);
-        return;
+        if (message.author.bot === false) { 
+            message.channel.send(message.author);
+        } 
     } else {
         switch (message.content) {
         case (prefix + "help"):
