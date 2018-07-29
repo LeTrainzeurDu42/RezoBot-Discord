@@ -4,7 +4,7 @@ const bot = new Discord.Client();
 var prefix = ("r!");
 
 bot.on('ready', function () {
-    bot.user.setActivity("BETA 0.2.1 - EN DEV");
+    bot.user.setActivity("BETA 0.2.2 - EN DEV");
     console.log("Connecté");
 });
 
