@@ -42,7 +42,7 @@ bot.on("message", message => {
     case (prefix + "aide"):
         let membreAide = message.member
         let roleAide = message.guild.roles.get("465803768307515392")
-        if (membreAide.roles.has(roleAide)) {
+        if (membreAide.roles.has(roleAide.id)) {
             message.reply("Tu as déjà demandé de l'aide ! Attends un peu !");
         } else {
             message.reply("Un @Staff a été prévenu, il sera à vous d'ici peu ! Rendez-vous dans le chat <#463112133849120771> :smile:");
