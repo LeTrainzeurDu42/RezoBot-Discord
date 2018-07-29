@@ -46,7 +46,7 @@ bot.on("message", message => {
             message.reply("Tu as déjà demandé de l'aide ! Attends un peu !");
         } else {
             message.reply("Un @Staff a été prévenu, il sera à vous d'ici peu ! Rendez-vous dans le chat <#463112133849120771> :smile:");
-            membreAide.addRole(roleAide.id);
+            membreAide.addRole(roleAide);
         }
         break;
     
