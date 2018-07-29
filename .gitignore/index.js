@@ -4,7 +4,7 @@ const bot = new Discord.Client();
 var prefix = ("r!");
 
 bot.on('ready', function () {
-    bot.user.setActivity("BETA 0.2.2 - EN DEV");
+    bot.user.setActivity("BETA 0.2.3 - EN DEV");
     console.log("Connecté");
 });
 
@@ -39,16 +39,16 @@ bot.on("message", message => {
         break;
             
        
-    case (prefix + "aide"):
-        let membreAide = message.author
-        let roleAide = message.guild.roles.find("id", "472802977661452292")
-        if (message.author.roles.has(roleAide)) {
-            message.reply("Tu as déjà demandé de l'aide ! Attends un peu !");
-        } else {
-            message.reply("Un @Staff a été prévenu, il sera à vous d'ici peu ! Rendez-vous dans le chat <#463112133849120771> :smile:");
-            membreAide.addRole(roleAide.id);
-        }
-        break;
+    //case (prefix + "aide"):
+        //let membreAide = message.author
+        //let roleAide = message.guild.roles.find("id", "472802977661452292")
+        //if (message.author.roles.has(roleAide)) {
+            //message.reply("Tu as déjà demandé de l'aide ! Attends un peu !");
+        //} else {
+            //message.reply("Un @Staff a été prévenu, il sera à vous d'ici peu ! Rendez-vous dans le chat <#463112133849120771> :smile:");
+            //membreAide.addRole(roleAide.id);
+        //}
+       // break;
     
     //case (prefix + "delrole aide"):
         //role.id("472802977661452292").members.removeRole("472802977661452292");
