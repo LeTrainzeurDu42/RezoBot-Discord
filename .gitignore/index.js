@@ -40,8 +40,14 @@ bot.on("message", message => {
             
        
     case (prefix + "aide"):
-        message.reply("Un @Staff a été prévenu, il sera à vous d'ici peu ! Rendez-vous dans le chat <#463112133849120771> :smile:");
-        message.author.addRole("472802977661452292");
+        let membreAide = message.author
+        let roleAide = message.guild.roles.find("id", "472802977661452292")
+        if (message.author.roles.has(roleAide)) {
+            message.reply("Tu as déjà demandé de l'aide ! Attends un peu !");
+        } else {
+            message.reply("Un @Staff a été prévenu, il sera à vous d'ici peu ! Rendez-vous dans le chat <#463112133849120771> :smile:");
+            membreAide.addRole(roleAide.id);
+        }
         break;
     
     //case (prefix + "delrole aide"):
