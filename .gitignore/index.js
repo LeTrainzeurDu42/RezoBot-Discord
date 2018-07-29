@@ -4,7 +4,7 @@ const bot = new Discord.Client();
 var prefix = ("r!");
 
 bot.on('ready', function () {
-    bot.user.setActivity("BETA 0.2.0 - EN DEV");
+    bot.user.setActivity("BETA 0.2.1 - EN DEV");
     console.log("Connecté");
 });
 
@@ -40,7 +40,7 @@ bot.on("message", message => {
             
        
     case (prefix + "aide"):
-        message.channel.send("<@" + message.author.id + ">, un @Staff a été prévenu, il sera à vous d'ici peu ! Rendez-vous dans le chat <#463112133849120771> :smile:");
+        message.reply("Un @Staff a été prévenu, il sera à vous d'ici peu ! Rendez-vous dans le chat <#463112133849120771> :smile:");
         message.author.addRole("472802977661452292");
         break;
     
