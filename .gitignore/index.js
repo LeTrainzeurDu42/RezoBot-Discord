@@ -4,7 +4,7 @@ const bot = new Discord.Client();
 var prefix = ("r!");
 
 bot.on('ready', function () {
-    bot.user.setActivity("BETA 0.2.3 - EN DEV");
+    bot.user.setActivity("BETA 0.2.4 - EN DEV");
     console.log("Connecté");
 });
 
@@ -38,6 +38,9 @@ bot.on("message", message => {
         message.channel.send("Bon, ca ira pour cette fois... Mon ping est de **" + ping + "ms**. Mais attention la prochaine fois hein :unamused:");
         break;
             
+    case (prefix + "test"):
+        message.channel.send("?role " + message.author.id + " A besoin d'aide");
+        break;
        
     //case (prefix + "aide"):
         //let membreAide = message.author
