@@ -4,7 +4,7 @@ const bot = new Discord.Client();
 var prefix = ("r!");
 
 bot.on('ready', function () {
-    bot.user.setActivity("BETA 0.2.6 - EN DEV");
+    bot.user.setActivity("BETA 0.2.7 - EN DEV");
     console.log("Connecté");
 });
 
@@ -41,7 +41,7 @@ bot.on("message", message => {
        
     case (prefix + "aide"):
         let membreAide = message.member
-        let roleAide = message.guild.roles.get("472802977661452292")
+        let roleAide = message.guild.roles.get("465803768307515392")
         if (membreAide.roles.has(roleAide)) {
             message.reply("Tu as déjà demandé de l'aide ! Attends un peu !");
         } else {
