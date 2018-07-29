@@ -41,7 +41,7 @@ bot.on("message", message => {
        
     case (prefix + "aide"):
         let membreAide = message.member
-        let roleAide = message.guild.roles.find("id", "472802977661452292")
+        let roleAide = "472802977661452292"
         if (membreAide.roles.has(roleAide)) {
             message.reply("Tu as déjà demandé de l'aide ! Attends un peu !");
         } else {
