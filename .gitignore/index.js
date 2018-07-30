@@ -4,7 +4,7 @@ const bot = new Discord.Client();
 var prefix = ("r!");
 
 bot.on('ready', function () {
-    bot.user.setActivity("BETA 0.3.1 - EN DEV");
+    bot.user.setActivity("BETA 0.3.2 - EN DEV");
     console.log("Connecté");
 });
 
@@ -53,7 +53,7 @@ bot.on("message", message => {
                     let membreAide = message.mentions.members.first();
                     if (membreAide === undefined) {
                         message.reply("merci de mentionner un membre valide !");
-                    } else if (message.author.permission.has(MANAGE_ROLES) === false) {
+                    } else if (message.member.hasPermission("MANAGE_ROLES") === false) {
                         message.channel.send("Non.");
                     } else {
                         let roleAide = message.guild.roles.get("465803768307515392");
