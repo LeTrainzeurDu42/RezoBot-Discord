@@ -4,7 +4,7 @@ const bot = new Discord.Client();
 var prefix = ("r!");
 
 bot.on('ready', function () {
-    bot.user.setActivity("BETA 0.2.8 - EN DEV");
+    bot.user.setActivity("BETA 0.2.9 - EN DEV");
     console.log("Connecté");
 });
 
@@ -42,13 +42,11 @@ bot.on("message", message => {
     case (prefix + "aide"):
         let membreAide = message.member;
         let roleAide = message.guild.roles.get("465803768307515392");
-        let chatStaff = message.guild.channel.get("463113451049582592");
         if (membreAide.roles.has(roleAide.id)) {
             message.reply("tu as déjà demandé de l'aide ! Attends un peu !");
         } else {
-            message.reply("un membre du Staff a été prévenu, il sera à vous d'ici peu ! Rendez-vous dans le chat <#463112133849120771> :smile:");
+            message.reply("un membre du <@&463112847468265512> a été prévenu, il sera à vous d'ici peu ! Rendez-vous dans le chat <#463112133849120771> :smile:");
             membreAide.addRole(roleAide);
-            chatStaff.send("@here, " + membreAide.user.username + "a besoin d'aide jcrois");
         }
         break;
     
