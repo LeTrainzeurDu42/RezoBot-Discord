@@ -2,15 +2,16 @@ const Discord = require("discord.js");
 const bot = new Discord.Client();
 
 var prefix = ("r!");
+var version = "BETA 0.3.3";
 
 bot.on('ready', function () {
-    bot.user.setActivity("BETA 0.3.2 - EN DEV");
+    bot.user.setActivity(version + " - EN DEV");
     console.log("Connecté");
 });
 
 bot.login(process.env.TOKEN);
 
-var aide = "Merci de ne pas utiliser le bot pour le moment.";
+
 
 
 bot.on("message", message => {
@@ -25,7 +26,61 @@ bot.on("message", message => {
                 break;
                 
             case "help":
-                message.channel.send(aide);
+                if (args[0] === undefined) {
+                    const embed = new Discord.RichEmbed()
+                        .setTitle("Liste des commandes disponibles")
+                        .setAuthor("RézoBot", "https://cdn.discordapp.com/attachments/463113451049582592/464124810688069655/PicsArt_07-04-07.46.57.jpg")
+                        .setColor(8080FF)
+                        .setDescription("Pour plus d'infos sur les commandes, faites `r!help` + le nom de la commande :smile: Exemple : `r!help ping")
+                        .setFooter("Version " + version, "https://cdn.discordapp.com/attachments/463113451049582592/464124810688069655/PicsArt_07-04-07.46.57.jpg")
+                        .setTimestamp()
+                        .addField("Commandes utiles à la maintenance du bot", "`ping`, `pong`, `help`")
+                        .addField("Commandes en cas de souci", "`aide`")
+                        .addField("Commandes pour le Rézo Quotidien", "`site`")
+                        .addField("D'autres commandes arrivent prochainement !", "");
+                    message.channel.send(embed)
+                } else {
+                    switch (args[0]) {
+                        case "help":
+                            const embed = new Discord.RichEmbed()
+                                .setTitle("Aide pour la commande `help`")
+                                .setDescription("Les [] ne sont pas à ajouter.")
+                                .addField("Pour afficher la liste des commandes :", "`help`")
+                                .addField("Pour afficher l'aide propre à une commande :", "`help` [commande]");
+                            message.channel.send(embed)
+                            break;
+                        case "ping":
+                            const embed = new Discord.RichEmbed()
+                                .setTitle("Aide pour la commande `ping`")
+                                .setDescription("Les [] ne sont pas à ajouter.")
+                                .addField("Pour afficher le ping du bot :", "`ping`");
+                            message.channel.send(embed)
+                            break;
+                        case "aide":
+                            if (message.member.hasPermission("MANAGE_ROLES") === true) {
+                                const embed = new Discord.RichEmbed()
+                                    .setTitle("Aide pour la commande `ping`")
+                                    .setDescription("Les [] ne sont pas à ajouter. Certaines de ces commandes sont réservées aux admins.")
+                                    .addField("En cas de problème : ", "`aide`")
+                                    .addField("Pour supprimer le rôle *A besoin d'aide* à un membre :" "`aide` [mention du membre]");
+                                message.channel.send(embed)
+                            } else {
+                                const embed = new Discord.RichEmbed()
+                                    .setTitle("Aide pour la commande `ping`")
+                                    .setDescription("Les [] ne sont pas à ajouter.")
+                                    .addField("En cas de problème : ", "`aide`");
+                                message.channel.send(embed)
+                            }
+                            break;
+                        case "site":
+                            const embed = new Discord.RichEmbed()
+                                .setTitle("Aide pour la commande `site`")
+                                .setDescription("Les [] ne sont pas à ajouter.")
+                                .addField("Pour afficher l'URL du site Internet du Rézo Quotidien : ", "`aide`");
+                            message.channel.send(embed)
+                            break;
+                    }
+                }
                 break;
             
             case "site":
