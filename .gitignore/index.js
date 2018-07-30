@@ -13,7 +13,7 @@ bot.login(process.env.TOKEN);
 var aide = "Merci de ne pas utiliser le bot pour le moment.";
 
 
-bot.on("message", message =>
+bot.on("message", message => {
     if (message.content.startsWith(prefix)) {
         const args = message.content.slice(prefix.length).trim().split(/ +/g);
         const command = args.shift().toLowerCase();
