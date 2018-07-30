@@ -28,7 +28,7 @@ bot.on("message", message => {
                         .setTitle("Liste des commandes disponibles")
                         .setAuthor("RézoBot", "https://cdn.discordapp.com/attachments/463113451049582592/464124810688069655/PicsArt_07-04-07.46.57.jpg")
                         .setColor("#8080FF")
-                        .setDescription("Pour plus d'infos sur les commandes, faites `r!help` + le nom de la commande :smile: Exemple : `r!help ping")
+                        .setDescription("Pour plus d'infos sur les commandes, faites `r!help` + le nom de la commande :smile: Exemple : `r!help ping`")
                         .setFooter("Version " + version, "https://cdn.discordapp.com/attachments/463113451049582592/464124810688069655/PicsArt_07-04-07.46.57.jpg")
                         .setTimestamp()
                         .addField("Commandes utiles à la maintenance du bot", "`ping`, `pong`, `help`")
