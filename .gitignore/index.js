@@ -4,7 +4,7 @@ const bot = new Discord.Client();
 var prefix = ("r!");
 
 bot.on('ready', function () {
-    bot.user.setActivity("BETA 0.3.0 - EN DEV");
+    bot.user.setActivity("BETA 0.3.1 - EN DEV");
     console.log("Connecté");
 });
 
@@ -67,6 +67,7 @@ bot.on("message", message =>
                 }
             
         }
+    }
 });
 
 bot.on('guildMemberAdd', member => {
