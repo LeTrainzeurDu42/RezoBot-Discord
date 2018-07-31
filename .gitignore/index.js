@@ -76,7 +76,7 @@ bot.on("message", message => {
                             break;
                             
                         case "ban":
-                            if message.member.hasPermission("BAN_MEMBERS") {
+                            if (message.member.hasPermission("BAN_MEMBERS")) {
                                 const aideBan = new Discord.RichEmbed()
                                     .setTitle("Aide pour la commande `ban`")
                                     .setDescription("Les [] ne sont pas à ajouter. Cette commande est réservé aux membres ayant la permission de bannir des membres.")
