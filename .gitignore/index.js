@@ -125,15 +125,11 @@ bot.on("message", message => {
                 let membreBan = message.mentions.members.first();
                 if(!membreBan) return message.reply("le membre mentionné est invalide")
                 if (membreBan.bannable === false) return message.reply("désolé, mais je ne peux pas bannir ce membre.");
-                let nomBanni = membreBan.username;
+                let nomBanni = membreBan.user.username;
                 let bannisseur = message.member;
                 let text = "";
-                if (!args [1]) {
-                    text = "es-tu sûr de vouloir bannir " + nomBanni + " ? Cette décision est importante. Réagis avec ✅ pour confirmer ou ❌ pour arrêter la procédure. Tu as dix secondes.";
-                } else {
-                    var raison = args.shift().join(" ");
-                    text = "es-tu sûr de vouloir bannir " + nomBanni + " pour la raison suivante : *" + raison + "* ? Cette décision est importante. Réagis avec ✅ pour confirmer ou ❌ pour arrêter la procédure. Tu as dix secondes.";
-                }
+                text = "es-tu sûr de vouloir bannir " + nomBanni + " ? Cette décision est importante. Réagis avec ✅ pour confirmer ou ❌ pour arrêter la procédure. Tu as dix secondes.";
+                let raison = "";
                 message.reply(text).then(m => {
                     m.react("✅");
                     m.react("❌");
@@ -143,7 +139,7 @@ bot.on("message", message => {
                         let choice = collected.first().emoji.name
                         if(collected.first().emoji.name == "✅"){
                             membreBan.ban(raison);
-                            message.channel.send(membreBan.username + " a bien été banni !");
+                            message.channel.send(nomBanni + " a bien été banni !");
                         }else{
                             message.channel.send("Opération annulée.")
                         }
