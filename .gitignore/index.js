@@ -178,8 +178,11 @@ bot.on("message", message => {
             case "say":
                 if (message.member.hasPermission("ADMINISTRATOR") === false) return message.reply("ptdr t ki");
                 else {
-                    let reponse = args.shift().join(" ");
-                    return message.delete().then(message.channel.reply(reponse)).catch(console.error);
+                    var reponse = "";
+                    for (var i = 0; i < args.length; i++) {
+                        reponse = reponse + " " + args[i];
+                    }
+                    return message.delete().then(message.channel.send(reponse)).catch(console.error);
                 }
         }
     }
