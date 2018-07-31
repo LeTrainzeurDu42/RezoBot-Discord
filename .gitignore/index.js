@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 const bot = new Discord.Client();
 
 var prefix = ("r!");
-var version = "BETA 0.3.4";
+var version = "BETA 0.4.0";
 
 bot.on('ready', function () {
     bot.user.setActivity(version + " - EN DEV");
@@ -28,7 +28,7 @@ bot.on("message", message => {
                         .setTitle("Liste des commandes disponibles")
                         .setAuthor("RézoBot", "https://cdn.discordapp.com/attachments/463113451049582592/464124810688069655/PicsArt_07-04-07.46.57.jpg")
                         .setColor("#8080FF")
-                        .setDescription("Pour plus d'infos sur les commandes, faites `r!help` + le nom de la commande :smile: Exemple : `r!help ping`")
+                        .setDescription("Pour plus d'infos sur les commandes, faites `r!help` + le nom de la commande :smile: Exemple : `r!help ping")
                         .setFooter("Version " + version, "https://cdn.discordapp.com/attachments/463113451049582592/464124810688069655/PicsArt_07-04-07.46.57.jpg")
                         .setTimestamp()
                         .addField("Commandes utiles à la maintenance du bot", "`ping`, `pong`, `help`")
@@ -117,6 +117,38 @@ bot.on("message", message => {
                         }
                     }
                 }
+                break;
+            
+            case "ban":
+                if (message.member.hasPermission("BAN_MEMBERS") === false || message.author.bot === true) return message.reply("désolé, mais tu n'as pas le droit de bannir.");
+                if (args[0] === undefined) return message.reply("précise quel membre tu souhaites bannir !");
+                if (message.mentions.members.first().bannable === false) return message.reply("désolé, mais je ne peux pas bannir ce membre.");
+                let membreBan = message.mentions.members.first();
+                if(!membreBan) return message.reply("le membre mentionné est invalide")
+                let bannisseur = message.member;
+                let text = ""
+                if (!args [1]) {
+                    text = "es-tu sûr de vouloir bannir " + membreBan.username + " ? Cette décision est importante. Dis **OUI** pour confirmer ou **NON** pour arrêter la procédure. Tu as dix secondes.";
+                } else {
+                    var raison = args.shift().join(" ");
+                    text = "es-tu sûr de vouloir bannir " + membreBan.username + " pour la raison suivante : *" + raison + "* ? Cette décision est importante. Dis **OUI** pour confirmer ou **NON** pour arrêter la procédure. Tu as dix secondes.";
+                }
+                message.reply(text).then(m => {
+                    m.react("✅");
+                    m.react("❌");
+                    const filter = (reaction, user) => (reaction.emoji.name === '✅' || reaction.emoji.name === '❌')&& user.id === m.author.id
+                    m.awaitReactions(filter, { max:1, time: 10000 })
+                        .then(collected => {
+                        let choice = collected.first().emoji.name
+                        if(collected.first().emoji.name == "✅"){
+                            membreBan.ban(raison);
+                            message.channel.send(membreBan.username + "a bien été banni !");
+                        }else{
+                            message.channel.send("Opération annulée.")
+                        }
+                    }).catch(()=>message.channel.send("Aucune réponse reçue...")));
+                });
+                break;
             
         }
     }
