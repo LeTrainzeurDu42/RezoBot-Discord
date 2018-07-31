@@ -146,7 +146,7 @@ bot.on("message", message => {
                         }else{
                             message.channel.send("Opération annulée.")
                         }
-                    }).catch(()=>message.channel.send("Aucune réponse reçue...")));
+                    }).catch(()=>message.channel.send("Aucune réponse reçue..."));
                 });
                 break;
             
