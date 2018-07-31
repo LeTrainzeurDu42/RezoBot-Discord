@@ -162,7 +162,7 @@ bot.on("message", message => {
                 else {
                     let gradeMute = message.guild.roles.get("473812349719937026");
                     let membreMute = message.mentions.members.first();
-                    membreMute.addrole(gradeMute.id).then(message.reply("Le membre " + membreMute.user.username + " a bien été mute !")).catch(message.reply("Erreur inconnue, impossible de réaliser l'opération"))
+                    membreMute.addRole(gradeMute.id).then(message.reply("Le membre " + membreMute.user.username + " a bien été mute !"));
                 }
                 break;
         }
