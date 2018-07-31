@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 const bot = new Discord.Client();
 
 var prefix = ("r!");
-var version = "BETA 0.4.1";
+var version = "BETA 0.4.2";
 
 bot.on('ready', function () {
     bot.user.setActivity(version + " - EN DEV");
@@ -125,8 +125,9 @@ bot.on("message", message => {
                 let membreBan = message.mentions.members.first();
                 if(!membreBan) return message.reply("le membre mentionné est invalide")
                 if (membreBan.bannable === false) return message.reply("désolé, mais je ne peux pas bannir ce membre.");
+                let nomBanni = membreBan.username;
                 let bannisseur = message.member;
-                let text = ""
+                let text = "";
                 if (!args [1]) {
                     text = "es-tu sûr de vouloir bannir " + membreBan.username + " ? Cette décision est importante. Réagis avec ✅ pour confirmer ou ❌ pour arrêter la procédure. Tu as dix secondes.";
                 } else {
@@ -136,7 +137,7 @@ bot.on("message", message => {
                 message.reply(text).then(m => {
                     m.react("✅");
                     m.react("❌");
-                    const filter = (reaction, user) => (reaction.emoji.name === '✅' || reaction.emoji.name === '❌')&& user.id === m.author.id
+                    const filter = (reaction, user) => (reaction.emoji.name === '✅' || reaction.emoji.name === '❌')&& user.id === bannisseur.id
                     m.awaitReactions(filter, { max:1, time: 10000 })
                         .then(collected => {
                         let choice = collected.first().emoji.name
