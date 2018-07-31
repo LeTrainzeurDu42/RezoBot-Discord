@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 const bot = new Discord.Client();
 
 var prefix = ("r!");
-var version = "BETA 0.4.2";
+var version = "BETA 0.4.3";
 
 bot.on('ready', function () {
     bot.user.setActivity(version + " - EN DEV");
@@ -34,6 +34,7 @@ bot.on("message", message => {
                         .addField("Commandes utiles à la maintenance du bot", "`ping`, `pong`, `help`")
                         .addField("Commandes en cas de souci", "`aide`")
                         .addField("Commandes pour le Rézo Quotidien", "`site`")
+                        .addField("Commandes de modération", "`ban`")
                         .addField("D'autres commandes arrivent prochainement !", "Le bot est encore en version BETA :wink:");
                     message.channel.send(aideGenerale)
                 } else {
@@ -49,7 +50,6 @@ bot.on("message", message => {
                         case "ping":
                             const aidePing = new Discord.RichEmbed()
                                 .setTitle("Aide pour la commande `ping`")
-                                .setDescription("Les [] ne sont pas à ajouter.")
                                 .addField("Pour afficher le ping du bot :", "`ping`");
                             message.channel.send(aidePing)
                             break;
@@ -64,7 +64,6 @@ bot.on("message", message => {
                             } else {
                                 const aideAide = new Discord.RichEmbed()
                                     .setTitle("Aide pour la commande `ping`")
-                                    .setDescription("Les [] ne sont pas à ajouter.")
                                     .addField("En cas de problème : ", "`aide`");
                                 message.channel.send(aideAide)
                             }
@@ -72,10 +71,18 @@ bot.on("message", message => {
                         case "site":
                             const aideSite = new Discord.RichEmbed()
                                 .setTitle("Aide pour la commande `site`")
-                                .setDescription("Les [] ne sont pas à ajouter.")
                                 .addField("Pour afficher l'URL du site Internet du Rézo Quotidien : ", "`aide`");
                             message.channel.send(aideSite)
                             break;
+                            
+                        case "ban":
+                            if message.member.hasPermission("BAN_MEMBERS") {
+                                const aideBan = new Discord.RichEmbed()
+                                    .setTitle("Aide pour la commande `ban`")
+                                    .setDescription("Les [] ne sont pas à ajouter. Cette commande est réservé aux membres ayant la permission de bannir des membres.")
+                                    .addField("Pour bannir un membre : ", "`ban` [mention du membre à bannir]");
+                                return message.channel.send(aideBan);
+                            } else return message.reply("étant donné que tu n'as pas le droit de bannir, ca ne sert à rien que j'affiche le help pour cette commande, n'est-ce pas ?")
                     }
                 }
                 break;
