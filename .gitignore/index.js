@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 const bot = new Discord.Client();
 
 var prefix = ("r!");
-var version = "BETA 0.4.4";
+var version = "BETA 0.4.5";
 
 bot.on('ready', function () {
     bot.user.setActivity(version + " - EN DEV");
@@ -34,7 +34,7 @@ bot.on("message", message => {
                         .addField("Commandes utiles à la maintenance du bot", "`ping`, `pong`, `help`")
                         .addField("Commandes en cas de souci", "`aide`")
                         .addField("Commandes pour le Rézo Quotidien", "`site`")
-                        .addField("Commandes de modération", "`ban`")
+                        .addField("Commandes de modération", "`ban`, `mute`")
                         .addField("D'autres commandes arrivent prochainement !", "Le bot est encore en version BETA :wink:");
                     message.channel.send(aideGenerale)
                 } else {
@@ -83,6 +83,15 @@ bot.on("message", message => {
                                     .addField("Pour bannir un membre : ", "`ban` [mention du membre à bannir]");
                                 return message.channel.send(aideBan);
                             } else return message.reply("étant donné que tu n'as pas le droit de bannir, ca ne sert à rien que j'affiche le help pour cette commande, n'est-ce pas ?")
+                            
+                        case "mute":
+                            if (message.member.hasPermission("MANAGE_ROLES")){
+                                const aideMute = new Discord.RichEmbed()
+                                    .setTitle("Aide pour la commande `mute`")
+                                    .setDescription("Les [] ne sont pas à ajouter. Cette commande est réservé aux membres ayant la permission de gérer les rôles.")
+                                    .addField("Pour bannir un membre : ", "`mute` [mention du membre à mute]");
+                                return message.channel.send(aideMute);
+                            } else return message.reply("tu n'as pas la permission de mute, dont c'est complètement inutile que tu saches te servir de la commande, non ?");
                     }
                 }
                 break;
@@ -162,7 +171,7 @@ bot.on("message", message => {
                 else {
                     let gradeMute = message.guild.roles.get("473812349719937026");
                     let membreMute = message.mentions.members.first();
-                    membreMute.addRole(gradeMute.id).then(message.reply("Le membre " + membreMute.user.username + " a bien été mute !"));
+                    membreMute.addRole(gradeMute.id).then(message.reply("Le membre " + membreMute.user.username + " a bien été mute !"))
                 }
                 break;
         }
