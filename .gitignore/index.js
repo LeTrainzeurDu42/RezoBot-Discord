@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 const bot = new Discord.Client();
 
 var prefix = ("r!");
-var version = "BETA 0.4.5";
+var version = "BETA 0.4.6";
 
 bot.on('ready', function () {
     bot.user.setActivity(version + " - EN DEV");
@@ -174,6 +174,13 @@ bot.on("message", message => {
                     membreMute.addRole(gradeMute.id).then(message.reply("Le membre " + membreMute.user.username + " a bien été mute !"))
                 }
                 break;
+                
+            case "say":
+                if (message.member.hasPermission("ADMINISTRATOR") === false) return message.reply("ptdr t ki");
+                else {
+                    let reponse = args.shift().join(" ");
+                    return message.delete().then(message.channel.reply(reponse)).catch(console.error);
+                }
         }
     }
 });
