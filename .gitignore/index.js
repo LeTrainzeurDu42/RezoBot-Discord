@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 const bot = new Discord.Client();
 
 var prefix = ("r!");
-var version = "BETA 0.4.3";
+var version = "BETA 0.4.4";
 
 bot.on('ready', function () {
     bot.user.setActivity(version + " - EN DEV");
@@ -153,7 +153,18 @@ bot.on("message", message => {
                     }).catch(()=>message.channel.send("Aucune réponse reçue, opération annulée."));
                 });
                 break;
-            
+                
+            case "mute":
+                if (message.member.hasPermission("MANAGE_ROLES") === false) return message.reply("tu n'as pas la permission de faire ça !");
+                else if (args[0] === undefined) return message.reply("quel membre souhaites-tu punir ?");
+                else if (message.mentions.members.first() === undefined) return message.reply("merci de mentionner un membre valide !");
+                else if (message.mentions.members.first().hasPermission("ADMINISTRATOR")) return message.reply("je ne peux pas mute un administrateur !");
+                else {
+                    let gradeMute = message.guild.roles.get("473812349719937026");
+                    let membreMute = message.mentions.members.first();
+                    membreMute.addrole(gradeMute.id).then(message.reply("Le membre " + membreMute.user.username + " a bien été mute !")).catch(message.reply("Erreur inconnue, impossible de réaliser l'opération"))
+                }
+                break;
         }
     }
 });
