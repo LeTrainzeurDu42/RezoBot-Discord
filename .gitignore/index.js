@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 const bot = new Discord.Client();
 
 var prefix = ("r!");
-var version = "BETA 0.5.0";
+var version = "BETA 0.5.1";
 
 bot.on('ready', function () {
     bot.user.setActivity(version + " - EN DEV");
@@ -33,7 +33,7 @@ bot.on("message", message => {
                         .setTimestamp()
                         .addField("Maintenance et administration", "`ping`, `pong`, `help`, `say`")
                         .addField("Pour tout le monde", "`aide`, `site`")
-                        .addField("Modération", "`ban`, `mute`, `kick`")
+                        .addField("Modération", "`ban`, `mute`, `kick`, `unmute`")
                         .addField("D'autres commandes arrivent prochainement !", "Le bot est encore en version BETA :wink:");
                     message.channel.send(aideGenerale)
                 } else {
@@ -89,7 +89,7 @@ bot.on("message", message => {
                                 return message.channel.send(aideBan);
                             } else return message.reply("étant donné que tu n'as pas le droit de bannir, ca ne sert à rien que j'affiche le help pour cette commande, n'est-ce pas ?")
                             
-                        case "ban":
+                        case "kick":
                             if (message.member.hasPermission("KICK_MEMBERS")) {
                                 const aideKick = new Discord.RichEmbed()
                                     .setTitle("Aide pour la commande `kick`")
@@ -125,7 +125,7 @@ bot.on("message", message => {
                                     .setTitle("Aide pour la commande `unmute`")
                                     .setColor("#8080FF")
                                     .setDescription("Les [] ne sont pas à ajouter. Cette commande est réservé aux membres ayant la permission de gérer les rôles.")
-                                    .addField("Pour unmute un membre mute : ", "`mute` [mention du membre à unmute]");
+                                    .addField("Pour unmute un membre mute : ", "`unmute` [mention du membre à unmute]");
                                 return message.channel.send(aideUnmute);
                             } else return message.reply("tu n'as pas la permission de mute, dont c'est complètement inutile que tu saches te servir de la commande, non ?");
                     }
@@ -204,21 +204,21 @@ bot.on("message", message => {
                 if (args[0] === undefined) return message.reply("précise quel membre tu souhaites kick !");
                 let membreKick = message.mentions.members.first();
                 if(!membreKick) return message.reply("le membre mentionné est invalide")
-                if (membreBan.kickable === false) return message.reply("désolé, mais je ne peux pas kick ce membre.");
+                if (membreKick.kickable === false) return message.reply("désolé, mais je ne peux pas kick ce membre.");
                 let nomKick = membreKick.user.username;
                 let kicker = message.member;
-                let text = "";
-                text = "es-tu sûr de vouloir kick " + nomKick + " ? Cette décision est importante. Réagis avec ✅ pour confirmer ou ❌ pour arrêter la procédure. Tu as dix secondes.";
-                let raison = "";
-                message.reply(text).then(m => {
-                    m.react("✅");
-                    m.react("❌");
-                    const filter = (reaction, user) => (reaction.emoji.name === '✅' || reaction.emoji.name === '❌')&& user.id === kicker.id
-                    m.awaitReactions(filter, { max:1, time: 10000 })
+                let texte = "";
+                texte = "es-tu sûr de vouloir kick " + nomKick + " ? Cette décision est importante. Réagis avec ✅ pour confirmer ou ❌ pour arrêter la procédure. Tu as dix secondes.";
+                let raisons = "";
+                message.reply(texte).then(m2 => {
+                    m2.react("✅");
+                    m2.react("❌");
+                    const filter2 = (reaction, user) => (reaction.emoji.name === '✅' || reaction.emoji.name === '❌')&& user.id === kicker.id
+                    m2.awaitReactions(filter2, { max:1, time: 10000 })
                         .then(collected => {
-                        let choice = collected.first().emoji.name
+                        let choix = collected.first().emoji.name
                         if(collected.first().emoji.name == "✅"){
-                            membreKick.kick(raison);
+                            membreKick.kick(raisons);
                             message.channel.send(nomKick + " a bien été kick !");
                         }else{
                             message.channel.send("Opération annulée.")
@@ -252,7 +252,7 @@ bot.on("message", message => {
             case "unmute":
                 if (message.member.hasPermission("MANAGE_ROLES") === false) return message.channel.send("Nan.");
                 else if (args[0] === undefined) return message.reply("quel membre souhaites-tu unmute ?");
-                else if (message.mentions.members.first() === undefined) return message.reply("Merci de mentionner un membre valide !");
+                else if (message.mentions.members.first() === undefined) return message.reply("merci de mentionner un membre valide !");
                 else if (message.mentions.members.first().roles.has("473812349719937026")) {
                     let gradeMute = message.guild.roles.get("473812349719937026");
                     let membreMute = message.mentions.members.first();
