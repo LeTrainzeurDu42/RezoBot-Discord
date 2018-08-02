@@ -2,10 +2,16 @@ const Discord = require("discord.js");
 const bot = new Discord.Client();
 
 var prefix = ("r!");
-var version = "BETA 0.5.1";
+var update = {
+    version: "BETA 0.6.7",
+    patch: "▶ Fix des bugs du message de la commande `update` \n ▶ Fix des bugs de la commande `purge`",
+    maj: "▶ Ajout des commandes `update` et `purge` \n ▶ Mise à jour et réorganisation du `help`",
+    prochainement: "▶ Mise en place de l'antibot",
+    date: "02/08/2018",
+};
 
 bot.on('ready', function () {
-    bot.user.setActivity(version + " - EN DEV");
+    bot.user.setActivity(update.version + " - EN DEV");
     console.log("Connecté");
 });
 
@@ -29,11 +35,11 @@ bot.on("message", message => {
                         .setAuthor("RézoBot", "https://cdn.discordapp.com/attachments/463113451049582592/464124810688069655/PicsArt_07-04-07.46.57.jpg")
                         .setColor("#8080FF")
                         .setDescription("Pour plus d'infos sur les commandes, faites `r!help` + le nom de la commande :smile: Exemple : `r!help ping`")
-                        .setFooter("Version " + version, "https://cdn.discordapp.com/attachments/463113451049582592/464124810688069655/PicsArt_07-04-07.46.57.jpg")
+                        .setFooter("Version " + update.version, "https://cdn.discordapp.com/attachments/463113451049582592/464124810688069655/PicsArt_07-04-07.46.57.jpg")
                         .setTimestamp()
-                        .addField("Maintenance et administration", "`ping`, `pong`, `help`, `say`")
+                        .addField("Maintenance et administration", "`ping`, `pong`, `help`, `say`, `update`")
+                        .addField("Modération", "`ban`, `mute`, `kick`, `unmute`, `purge`")
                         .addField("Pour tout le monde", "`aide`, `site`")
-                        .addField("Modération", "`ban`, `mute`, `kick`, `unmute`")
                         .addField("D'autres commandes arrivent prochainement !", "Le bot est encore en version BETA :wink:");
                     message.channel.send(aideGenerale)
                 } else {
@@ -128,9 +134,41 @@ bot.on("message", message => {
                                     .addField("Pour unmute un membre mute : ", "`unmute` [mention du membre à unmute]");
                                 return message.channel.send(aideUnmute);
                             } else return message.reply("tu n'as pas la permission de mute, dont c'est complètement inutile que tu saches te servir de la commande, non ?");
+                            
+                        case "purge":
+                            if (message.member.hasPermission("MANAGE_MESSAGES")){
+                                const aidePurge = new Discord.RichEmbed()
+                                    .setTitle("Aide pour la commande `purge`")
+                                    .setColor("#8080FF")
+                                    .setDescription("Les [] ne sont pas à ajouter. Cette commande est réservé aux membres ayant la permission de gérer les messages.")
+                                    .addField("Pour supprimer entre 1 et 50 messages en une commande dans un channel: ", "`purge` [nombre de messages à supprimer]");
+                                return message.channel.send(aidePurge);
+                            } else return message.reply("tu n'as pas la permission de gérer les messages, dont c'est complètement inutile que tu saches te servir de la commande, non ?");
+                            
+                        case "update":
+                            const aideUpdate = new Discord.RichEmbed()
+                                .setTitle("Aide pour la commande `update`")
+                                .setColor("#8080FF")
+                                .addField("Pour afficher les infos sur les dernières mises à jour du bot : ", "`update`");
+                            message.channel.send(aideUpdate)
+                            break;    
                     }
                 }
                 break;
+                
+            case "update":
+                var messageUpdate = new Discord.RichEmbed()
+                    .setTitle("Dernières mises à jour du bot")
+                    .setAuthor("RézoBot", "https://cdn.discordapp.com/attachments/463113451049582592/464124810688069655/PicsArt_07-04-07.46.57.jpg")
+                    .setColor("#8080FF")
+                    .setDescription("Version actuelle : " + update.version + " ; date de dernière mise à jour : " + update.date)
+                    .setTimestamp()
+                    .addField("Derniers patchs", update.patch)
+                    .addBlankField(true)
+                    .addField("Dernière mise à jour", update.maj)
+                    .addBlankField(true)
+                    .addField("Prochainement", update.prochainement);
+               return message.channel.send(messageUpdate);
             
             case "site":
                 message.channel.send("Voici le site Internet du Rézo Quotidien ! https://rezoquotidien.wordpress.com/");
@@ -259,6 +297,16 @@ bot.on("message", message => {
                     membreMute.removeRole(gradeMute.id).then(message.reply("le membre " + membreMute.user.username + " a bien été unmute !")).catch(console.error);
                     break;
                 } else return message.reply("qu'est ce que tu racontes, toi ? Il est pas mute lui !");
+                
+            case "purge":
+                if (message.member.hasPermission("MANAGE_MESSAGES") === false) return message.channel.send("Nope");
+                else if (args[0] === undefined) return message.reply("merci de préciser le nombre de messages à supprimer entre 1 et 50");
+                else {
+                    var nbMessages = Number(args[0]);
+                    if (isNaN(nbMessages) === true) return message.reply("merci d'entrer un NOMBRE !");
+                    message.channel.bulkDelete(nbMessages).then(message.channel.send(nbMessages + "messages supprimés")).catch(console.error);
+                    break;
+                }
         }
     }
 });
