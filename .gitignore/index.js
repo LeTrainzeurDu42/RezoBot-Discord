@@ -3,7 +3,7 @@ const bot = new Discord.Client();
 
 var prefix = ("r!");
 var update = {
-    version: "BETA 0.6.7",
+    version: "BETA 0.6.8",
     patch: "▶ Fix des bugs du message de la commande `update` \n ▶ Fix des bugs de la commande `purge`",
     maj: "▶ Ajout des commandes `update` et `purge` \n ▶ Mise à jour et réorganisation du `help`",
     prochainement: "▶ Mise en place de l'antibot",
@@ -304,7 +304,8 @@ bot.on("message", message => {
                 else {
                     var nbMessages = Number(args[0]);
                     if (isNaN(nbMessages) === true) return message.reply("merci d'entrer un NOMBRE !");
-                    message.channel.bulkDelete(nbMessages).then(message.channel.send(nbMessages + "messages supprimés")).catch(console.error);
+                    else if (nbMessages < 1 || nbMessages > 50) return message.reply("merci d'entrer un nombre entre 0 et 50 !");
+                    message.channel.bulkDelete(nbMessages).then(message.channel.send(nbMessages + " messages supprimés")).catch(console.error);
                     break;
                 }
         }
