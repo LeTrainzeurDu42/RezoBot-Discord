@@ -6,7 +6,7 @@ var update = {
     version: "BETA 0.6.8",
     patch: "▶ Fix des bugs du message de la commande `update` \n ▶ Fix des bugs de la commande `purge`",
     maj: "▶ Ajout des commandes `update` et `purge` \n ▶ Mise à jour et réorganisation du `help`",
-    prochainement: "▶ Mise en place de l'antibot",
+    prochainement: "▶ Mise en place de l'antibot \n ▶ Ajout de la commande `poll` \n ▶ Mise en place d'un message pour les commandes inexistantes \n ▶ Ajout des rôles automatiques",
     date: "02/08/2018",
 };
 
