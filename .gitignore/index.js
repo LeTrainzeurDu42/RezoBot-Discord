@@ -3,10 +3,10 @@ const bot = new Discord.Client();
 
 var prefix = ("r!");
 var update = {
-    version: "BETA 0.6.8",
-    patch: "▶ Fix des bugs du message de la commande `update` \n ▶ Fix des bugs de la commande `purge`",
+    version: "BETA 0.6.9",
+    patch: "▶ Fix des bugs du message de la commande `update` \n ▶ Fix des bugs de la commande `purge` \n ▶ Mise en place de l'antibot \n ▶ Ajout d'un message si la commande demandée est invalide",
     maj: "▶ Ajout des commandes `update` et `purge` \n ▶ Mise à jour et réorganisation du `help`",
-    prochainement: "▶ Mise en place de l'antibot \n ▶ Ajout de la commande `poll` \n ▶ Mise en place d'un message pour les commandes inexistantes \n ▶ Ajout des rôles automatiques",
+    prochainement: "▶ Ajout de la commande `poll` \n ▶ Ajout des rôles automatiques",
     date: "02/08/2018",
 };
 
@@ -18,6 +18,7 @@ bot.on('ready', function () {
 bot.login(process.env.TOKEN);
 
 bot.on("message", message => {
+    if message.member.user.bot === true return;
     if (message.content.startsWith(prefix)) {
         const args = message.content.slice(prefix.length).trim().split(/ +/g);
         const command = args.shift().toLowerCase();
@@ -308,6 +309,9 @@ bot.on("message", message => {
                     message.channel.bulkDelete(nbMessages).then(message.channel.send(nbMessages + " messages supprimés")).catch(console.error);
                     break;
                 }
+                
+            default:
+                return message.reply("cette commande n'existe pas, ou plus, ou est en cours de développement");
         }
     }
 });
