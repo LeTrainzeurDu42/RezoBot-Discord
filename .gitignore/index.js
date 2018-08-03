@@ -18,7 +18,7 @@ bot.on('ready', function () {
 bot.login(process.env.TOKEN);
 
 bot.on("message", message => {
-    if message.member.user.bot === true return;
+    if (message.member.user.bot === true) return;
     if (message.content.startsWith(prefix)) {
         const args = message.content.slice(prefix.length).trim().split(/ +/g);
         const command = args.shift().toLowerCase();
