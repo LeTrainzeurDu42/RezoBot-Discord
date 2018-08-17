@@ -3,7 +3,7 @@ const bot = new Discord.Client();
 
 var prefix = ("r!");
 var update = {
-    version: "BETA 0.7.2",
+    version: "BETA 0.7.3",
     patch: "▶ Correction de bugs sur les nouvelles commandes \n▶ Correction du bug de la commande `purge` qui ne supprimait pas assez de messages \n▶ Ajout du help pour les nouvelles commandes \n▶ Autorisation d'utilisation de la commande `setact` pour <@437344559517925376>",
     maj: "▶ Ajout de commandes pour l'owner (`maintenance` et `setact`)",
     prochainement: "▶ Ajout d'une base de données' \n ▶ Ajout des rôles automatiques",
@@ -364,15 +364,16 @@ bot.on("message", message => {
               //  }
                 
             case "setact":
-                if (message.member.id !== "417754880950927360" || message.member.id !== "437344559517925376") return message.reply("Tu tentes quoi, exactement ?");
-                else if (args[0] === undefined) return message.reply("Tu veux que je fasse quoi, déjà ? Refais la commande s'il te plaît, avec ce que je dois faire cette fois :smile:");
-                else {
-                    var activite = args[0];
-                    for (var i = 1; i < args.length; i++) {
-                        activite = activite + " " + args[i];
+                if ((message.member.id === "417754880950927360") || (message.member.id === "437344559517925376")) {
+                    if (args[0] === undefined) return message.reply("Tu veux que je fasse quoi, déjà ? Refais la commande s'il te plaît, avec ce que je dois faire cette fois :smile:");
+                    else {
+                        var activite = args[0];
+                        for (var i = 1; i < args.length; i++) {
+                            activite = activite + " " + args[i];
+                        }
+                        bot.user.setActivity(activite).then(message.channel.send("Succès !")).catch(console.error);
                     }
-                    bot.user.setActivity(activite).then(message.channel.send("Succès !")).catch(console.error);
-                }
+                } else message.reply("tu tentes quoi, déjà ?")
                 break;
                 
             case "maintenance":
