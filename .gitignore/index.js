@@ -3,8 +3,8 @@ const bot = new Discord.Client();
 
 var prefix = ("r!");
 var update = {
-    version: "BETA 0.7.1",
-    patch: "▶ Correction de bugs sur les nouvelles commandes",
+    version: "BETA 0.7.2",
+    patch: "▶ Correction de bugs sur les nouvelles commandes \n▶ Correction du bug de la commande `purge` qui ne supprimait pas assez de messages \n▶ Ajout du help pour les nouvelles commandes",
     maj: "▶ Ajout de commandes pour l'owner (`maintenance` et `setact`)",
     prochainement: "▶ Ajout d'une base de données' \n ▶ Ajout des rôles automatiques",
     date: "17/08/2018",
@@ -38,7 +38,7 @@ bot.on("message", message => {
                         .setDescription("Pour plus d'infos sur les commandes, faites `r!help` + le nom de la commande :smile: Exemple : `r!help ping`")
                         .setFooter("Version " + update.version, "https://cdn.discordapp.com/attachments/463113451049582592/464124810688069655/PicsArt_07-04-07.46.57.jpg")
                         .setTimestamp()
-                        .addField("Maintenance et administration", "`ping`, `pong`, `help`, `say`, `update`")
+                        .addField("Maintenance et administration", "`ping`, `pong`, `help`, `say`, `update`, `maintenance`, `setact`")
                         .addField("Modération", "`ban`, `mute`, `kick`, `unmute`, `purge`")
                         .addField("Pour tout le monde", "`aide`, `site`")
                         .addField("D'autres commandes arrivent prochainement !", "Le bot est encore en version BETA :wink:");
@@ -152,7 +152,25 @@ bot.on("message", message => {
                                 .setColor("#8080FF")
                                 .addField("Pour afficher les infos sur les dernières mises à jour du bot : ", "`update`");
                             message.channel.send(aideUpdate)
-                            break;    
+                            break;  
+                            
+                        case "maintenance":
+                            const aideMaintenance = new Discord.RichEmbed()
+                                .setTitle("Aide pour la commande `maintenance`")
+                                .setDescription("Cette commande est réservée à l'owner et est encore en version BETA :wink:")
+                                .setColor("#8080FF")
+                                .addField("Pour mettre le bot en maintenance :", "`maintenance`")
+                            if (message.member.id === "417754880950927360") return message.channel.send(aideMaintenance);
+                            else return message.reply("non.");
+                            break;
+                            
+                        case "setact":
+                            const aideSetact = new Discord.RichEmbed()
+                                .setTitle("Aide pour la commande `setact`")
+                                .setDescription("Les [] ne sont pas à ajouter. Cette commande est réservée à <@417754880950927360> et à <@437344559517925376> et est encore en version BETA :wink:")
+                                .setColor("#8080FF")
+                                .addField("Pour changer l'activité du bot :", "`setact` [activité]");
+                            if (message.member.id === "417754880950927360" || message.member.id === "437344559517925376") return message.channel.send(aideSetact)
                     }
                 }
                 break;
@@ -306,7 +324,7 @@ bot.on("message", message => {
                     var nbMessages = Number(args[0]);
                     if (isNaN(nbMessages) === true) return message.reply("merci d'entrer un NOMBRE !");
                     else if (nbMessages < 1 || nbMessages > 50) return message.reply("merci d'entrer un nombre entre 0 et 50 !");
-                    message.channel.bulkDelete(nbMessages).then(message.channel.send(nbMessages + " messages supprimés")).catch(console.error);
+                    message.channel.bulkDelete(nbMessages + 1).then(message.channel.send(nbMessages + " messages supprimés")).catch(console.error);
                     break;
                 }
                 
@@ -346,7 +364,7 @@ bot.on("message", message => {
               //  }
                 
             case "setact":
-                if (message.member.id !== "417754880950927360") return message.reply("Tu tentes quoi, exactement ?");
+                if (message.member.id !== "417754880950927360" || message.member.id !== "437344559517925376") return message.reply("Tu tentes quoi, exactement ?");
                 else if (args[0] === undefined) return message.reply("Tu veux que je fasse quoi, déjà ? Refais la commande s'il te plaît, avec ce que je dois faire cette fois :smile:");
                 else {
                     var activite = args[0];
