@@ -4,7 +4,7 @@ const bot = new Discord.Client();
 var prefix = ("r!");
 var update = {
     version: "BETA 0.7.2",
-    patch: "▶ Correction de bugs sur les nouvelles commandes \n▶ Correction du bug de la commande `purge` qui ne supprimait pas assez de messages \n▶ Ajout du help pour les nouvelles commandes",
+    patch: "▶ Correction de bugs sur les nouvelles commandes \n▶ Correction du bug de la commande `purge` qui ne supprimait pas assez de messages \n▶ Ajout du help pour les nouvelles commandes \n▶ Autorisation d'utilisation de la commande `setact` pour <@437344559517925376>",
     maj: "▶ Ajout de commandes pour l'owner (`maintenance` et `setact`)",
     prochainement: "▶ Ajout d'une base de données' \n ▶ Ajout des rôles automatiques",
     date: "17/08/2018",
