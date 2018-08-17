@@ -3,11 +3,11 @@ const bot = new Discord.Client();
 
 var prefix = ("r!");
 var update = {
-    version: "BETA 0.6.9",
-    patch: "▶ Fix des bugs du message de la commande `update` \n ▶ Fix des bugs de la commande `purge` \n ▶ Mise en place de l'antibot \n ▶ Ajout d'un message si la commande demandée est invalide",
-    maj: "▶ Ajout des commandes `update` et `purge` \n ▶ Mise à jour et réorganisation du `help`",
-    prochainement: "▶ Ajout de la commande `poll` \n ▶ Ajout des rôles automatiques",
-    date: "02/08/2018",
+    version: "BETA 0.7.1",
+    patch: "▶ Correction de bugs sur les nouvelles commandes",
+    maj: "▶ Ajout de commandes pour l'owner (`maintenance` et `setact`)",
+    prochainement: "▶ Ajout d'une base de données' \n ▶ Ajout des rôles automatiques",
+    date: "17/08/2018",
 };
 
 bot.on('ready', function () {
@@ -309,6 +309,73 @@ bot.on("message", message => {
                     message.channel.bulkDelete(nbMessages).then(message.channel.send(nbMessages + " messages supprimés")).catch(console.error);
                     break;
                 }
+                
+            case "poll":
+                return;
+                //if (message.member.hasPermission("ADMINISTRATOR") === false) return message.channel.send("NEIN");
+                //if (args[0] === undefined) return message.reply("merci de préciser entre 2 et 5 possibilités de réponse !");
+                //var choix = ;
+                //var numeroChoix = 1;
+                //var choix1, choix2, choix3, choix4, choix5;
+                //for (var i = 0; i < args.length; i++) {
+                  //  if (args[i] !== "|") {
+                    //    if (numeroChoix === 1) {
+                      //      choix1 = choix1 + " " + args[i];
+                        //} else if (numeroChoix === 2) {
+                        //    choix2 = choix2 + " " + args[i];
+                        //} else if (numeroChoix === 3) {
+                          //  choix3 = choix3 + " " + args[i];
+                        //} else if (numeroChoix === 4) {
+                          //  choix4 = choix4 + " " + args[i];
+                        //} else if (numeroChoix === 5) {
+                          //  choix5 = choix5 + " " + args[i]:
+                        //} else return message.reply("pas plus de 5 possibilités !")
+                    //} else {
+                      //  numeroChoix++;
+                    //} 
+              //  }
+              //  if numeroChoix === 1 return message.reply("au moins 2 possibilités !");
+              //  else if numeroChoix === 2 {
+               //     var msgSondage = new Discord.RichEmbed()
+             //           .setTitle("Sondage")
+               //         .setDescription("Merci de voter une seule fois !")
+                 //       .setAuthor(message.member.user.username, message.member.user.avatarURL)
+                   //     .addField("Votez :one: pour...", choix1)
+                     //   .addField("Votez :two: pour...", choix2)
+                       // .setTimeStamp()
+              //  }
+                
+            case "setact":
+                if (message.member.id !== "417754880950927360") return message.reply("Tu tentes quoi, exactement ?");
+                else if (args[0] === undefined) return message.reply("Tu veux que je fasse quoi, déjà ? Refais la commande s'il te plaît, avec ce que je dois faire cette fois :smile:");
+                else {
+                    var activite = args[0];
+                    for (var i = 1; i < args.length; i++) {
+                        activite = activite + " " + args[i];
+                    }
+                    bot.user.setActivity(activite).then(message.channel.send("Succès !")).catch(console.error);
+                }
+                break;
+                
+            case "maintenance":
+                if (message.member.id !== "417754880950927360") return message.reply("MAIS... T'as pas le droit de me faire ça ! :sob:");
+                else message.channel.send("Es-tu sûr de vouloir mettre le bot en maintenance ? Cela va déconnecter le bot et envoyer un message dans le chat <#463108881200185354> ! Réagis avec ✅ pour continuer ou avec ❌ pour annuler. L'opération sera automatiquement annulée dans dix secondes en cas de non-réponse.").then(msgmtn => {
+                    msgmtn.react("✅");
+                    msgmtn.react("❌");
+                    const filtermtn = (reaction, user) => (reaction.emoji.name === '✅' || reaction.emoji.name === '❌')&& user.id === "417754880950927360"
+                    msgmtn.awaitReactions(filtermtn, { max:1, time: 10000 })
+                        .then(collected => {
+                        let choicemtn = collected.first().emoji.name
+                        if(collected.first().emoji.name == "✅"){
+                            let chatAnnonce = bot.channels.get("463108881200185354");
+                            chatAnnonce.send("<a:Loading:479729716585299983> Maintenance en cours. Le bot va être déconnecté et sera inutilisable.");
+                            bot.destroy();
+                        }else{
+                            message.channel.send("Opération annulée.")
+                        }
+                    }).catch(()=>message.channel.send("Aucune réponse reçue, opération annulée."));
+                }).catch(console.error);
+                break;
                 
             default:
                 return message.reply("cette commande n'existe pas, ou plus, ou est en cours de développement");
