@@ -1,40 +1,17 @@
 const Discord = require("discord.js");
 const bot = new Discord.Client();
-const Enmap = require('enmap');
-const EnmapLevel = require ('enmap-sqlite');
-const tableSource = new EnmapLevel({name: "dbBot"});
-const dbBot = new Enmap({provider: tableSource});
 
-if (dbBot.get("botinfo") === undefined) {
-    var settingsBot = {
-        prefix: "r!",    
-        version: "BETA 1.0.1",
-        lastPatch: "",
-        lastUpdate: "▶ Ajout d'une base de données",
-        nextUpdate: "",
-        dateUpdate: "19/08/2018",
-    };
-    dbBot.set("botinfo", settingsBot);
-}
-
-if (dbBot.get("activitesBot") === undefined) {
-    var botActivity = {
-        actual: "",
-        version: "Version " + dbBot.get("botinfo").version,
-        help: dbBot.get("botinfo").prefix + "help",
-        //members: A AJOUTER BORDEL DE CUL
-    };
-    dbBot.set("activitesBot", botActivity);
-}
-
-if (dbBot.get("activitesBot", "actual") === "") {
-    var botActivity = dbBot.get("activitesBot");
-    botActivity.actual = botActivity.version;
-    dbBot.set("activitesBot", botActivity);
-}
+var prefix = ("r!");
+var update = {
+    version: "BETA 0.7.4",
+    patch: "▶ Correction de bugs sur les nouvelles commandes \n▶ Correction du bug de la commande `purge` qui ne supprimait pas assez de messages \n▶ Ajout du help pour les nouvelles commandes \n▶ Autorisation d'utilisation de la commande `setact` pour <@437344559517925376> \n▶ Ajout de la commande `reboot` \n▶ Modification de la commande `maintenance`",
+    maj: "▶ Ajout de commandes pour l'owner (`maintenance` et `setact`)",
+    prochainement: "▶ Ajout d'une base de données' \n ▶ Ajout des rôles automatiques",
+    date: "17/08/2018",
+};
 
 bot.on('ready', function () {
-    bot.user.setActivity(dbBot.get("activitesBot", "actual"));
+    bot.user.setActivity(update.version + " - EN DEV");
     console.log("Connecté");
 });
 
@@ -42,7 +19,7 @@ bot.login(process.env.TOKEN);
 
 bot.on("message", message => {
     if (message.member.user.bot === true) return;
-    if (message.content.startsWith(dbBot.get("botinfo", "prefix"))) {
+    if (message.content.startsWith(prefix)) {
         const args = message.content.slice(prefix.length).trim().split(/ +/g);
         const command = args.shift().toLowerCase();
         switch (command) {
@@ -58,8 +35,8 @@ bot.on("message", message => {
                         .setTitle("Liste des commandes disponibles")
                         .setAuthor("RézoBot", "https://cdn.discordapp.com/attachments/463113451049582592/464124810688069655/PicsArt_07-04-07.46.57.jpg")
                         .setColor("#8080FF")
-                        .setDescription("Pour plus d'infos sur les commandes, faites `" + dbBot.get("botinfo", "prefix") + "help` + le nom de la commande :smile: Exemple : `" + dbBot.get("botinfo", "prefix") + "help ping`")
-                        .setFooter("Version " + dbBot.get("botinfo", "version"), "https://cdn.discordapp.com/attachments/463113451049582592/464124810688069655/PicsArt_07-04-07.46.57.jpg")
+                        .setDescription("Pour plus d'infos sur les commandes, faites `r!help` + le nom de la commande :smile: Exemple : `r!help ping`")
+                        .setFooter("Version " + update.version, "https://cdn.discordapp.com/attachments/463113451049582592/464124810688069655/PicsArt_07-04-07.46.57.jpg")
                         .setTimestamp()
                         .addField("Maintenance et administration", "`ping`, `pong`, `help`, `say`, `update`, `maintenance`, `setact`")
                         .addField("Modération", "`ban`, `mute`, `kick`, `unmute`, `purge`")
@@ -203,13 +180,13 @@ bot.on("message", message => {
                     .setTitle("Dernières mises à jour du bot")
                     .setAuthor("RézoBot", "https://cdn.discordapp.com/attachments/463113451049582592/464124810688069655/PicsArt_07-04-07.46.57.jpg")
                     .setColor("#8080FF")
-                    .setDescription("Version actuelle : " + dbBot.get("botinfo", "version") + " ; date de dernière mise à jour : " + dbBot.get("botinfo", "dateUpdate"))
+                    .setDescription("Version actuelle : " + update.version + " ; date de dernière mise à jour : " + update.date)
                     .setTimestamp()
-                    .addField("Derniers patchs", dbBot.get("botinfo", "lastPatch"))
+                    .addField("Derniers patchs", update.patch)
                     .addBlankField(true)
-                    .addField("Dernière mise à jour", dbBot.get("botinfo", "lastUpdate"))
+                    .addField("Dernière mise à jour", update.maj)
                     .addBlankField(true)
-                    .addField("Prochainement", dbBot.get("botinfo", "nextUpdate"));
+                    .addField("Prochainement", update.prochainement);
                return message.channel.send(messageUpdate);
             
             case "site":
@@ -219,7 +196,7 @@ bot.on("message", message => {
             case "pong":
                 var ping = new Date().getTime() - message.createdTimestamp;
                 message.channel.send("**PON...** Keske");
-                message.channel.send("MAIS T'ES CON OU QUOI ??? LA COMMANDE C'EST `" + dbBot.get("botinfo", "prefix") + "ping` BORDEL !!");
+                message.channel.send("MAIS T'ES CON OU QUOI ??? LA COMMANDE C'EST `" + prefix + "ping` BORDEL !!");
                 message.channel.send("Bon, ca ira pour cette fois... Mon ping est de **" + ping + "ms**. Mais attention la prochaine fois hein :unamused:");
                 break;
                 
@@ -390,26 +367,11 @@ bot.on("message", message => {
                 if ((message.member.id === "417754880950927360") || (message.member.id === "437344559517925376")) {
                     if (args[0] === undefined) return message.reply("Tu veux que je fasse quoi, déjà ? Refais la commande s'il te plaît, avec ce que je dois faire cette fois :smile:");
                     else {
-                        var botActivities = dbBot.get("activitesBot");
-                        switch (args[0]) {
-                            case "version":
-                                botActivities.actual = botActivities.version;
-                                break;
-                                
-                            case "help":
-                                botActivities.actual = botActivities.help;
-                                break;
-                                
-                            default:
-                                var activite = "";
-                                for (var i = 0; i < args.length; i++) {
-                                    activite = activite + " " + args[i];
-                                }
-                                botActivities.actual = activite;
-                                break;
+                        var activite = args[0];
+                        for (var i = 1; i < args.length; i++) {
+                            activite = activite + " " + args[i];
                         }
-                        dbBot.set("activitesBot", botActivities);
-                        bot.user.setActivity(botActivities.actual).then(message.channel.send("Succès !")).catch(console.error);
+                        bot.user.setActivity(activite).then(message.channel.send("Succès !")).catch(console.error);
                     }
                 } else message.reply("tu tentes quoi, déjà ?")
                 break;
