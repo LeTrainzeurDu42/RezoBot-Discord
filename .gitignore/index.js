@@ -1,10 +1,26 @@
+/*
+            DERNIERE VERSION STABLE DU REZOBOT
+           
+*/           
+
 const Discord = require("discord.js");
 const bot = new Discord.Client();
+const http = require('http');
+const express = require('express');
+const app = express();
+app.get("/", (request, response) => {
+  console.log(Date.now() + " Ping Received");
+  response.sendStatus(200);
+});
+app.listen(process.env.PORT);
+setInterval(() => {
+  http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
+}, 280000);
 
 var prefix = ("r!");
 var update = {
-    version: "BETA 0.7.4",
-    patch: "▶ Correction de bugs sur les nouvelles commandes \n▶ Correction du bug de la commande `purge` qui ne supprimait pas assez de messages \n▶ Ajout du help pour les nouvelles commandes \n▶ Autorisation d'utilisation de la commande `setact` pour <@437344559517925376> \n▶ Ajout de la commande `reboot` \n▶ Modification de la commande `maintenance`",
+    version: "BETA 0.7.5",
+    patch: "▶ Correction de bugs sur les nouvelles commandes \n▶ Correction du bug de la commande `purge` qui ne supprimait pas assez de messages \n▶ Ajout du help pour les nouvelles commandes \n▶ Autorisation d'utilisation de la commande `setact` pour <@437344559517925376> \n▶ ~~Ajout de la commande `reboot`~~ **SUPPRIMEE** \n▶ Modification de la commande `maintenance`",
     maj: "▶ Ajout de commandes pour l'owner (`maintenance` et `setact`)",
     prochainement: "▶ Ajout d'une base de données' \n ▶ Ajout des rôles automatiques",
     date: "17/08/2018",
@@ -396,24 +412,7 @@ bot.on("message", message => {
                 }).catch(console.error);
                 break;
                 
-            case "reboot":
-                if (message.member.id !== "417754880950927360") return message.reply("MAIS... T'as pas le droit de me faire ça ! :sob:");
-                else message.channel.send("Es-tu sûr de vouloir redémarrer le bot ? Cela va prendre environ une minute. Réagis avec ✅ pour continuer ou avec ❌ pour annuler. L'opération sera automatiquement annulée dans dix secondes en cas de non-réponse.").then(msgmtn => {
-                    msgmtn.react("✅");
-                    msgmtn.react("❌");
-                    const filtermtn = (reaction, user) => (reaction.emoji.name === '✅' || reaction.emoji.name === '❌')&& user.id === "417754880950927360"
-                    msgmtn.awaitReactions(filtermtn, { max:1, time: 10000 })
-                        .then(collected => {
-                        let choicemtn = collected.first().emoji.name
-                        if(collected.first().emoji.name == "✅"){
-                            message.channel.send("Redémarrage en cours...")
-                            bot.destroy();
-                        }else{
-                            message.channel.send("Opération annulée.")
-                        }
-                    }).catch(()=>message.channel.send("Aucune réponse reçue, opération annulée."));
-                }).catch(console.error);
-                break;
+           
                 
             default:
                 return message.reply("cette commande n'existe pas, ou plus, ou est en cours de développement");
